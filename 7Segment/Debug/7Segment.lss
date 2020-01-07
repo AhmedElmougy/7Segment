@@ -1,0 +1,405 @@
+
+7Segment.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000001ae  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         0000000a  00800060  000001ae  00000222  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  0000022c  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  0000025c  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 000000e8  00000000  00000000  00000298  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000d61  00000000  00000000  00000380  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000007d5  00000000  00000000  000010e1  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   0000088e  00000000  00000000  000018b6  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000160  00000000  00000000  00002144  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000005b3  00000000  00000000  000022a4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000a30  00000000  00000000  00002857  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 000000c0  00000000  00000000  00003287  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   8:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  10:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  14:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  18:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  1c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  20:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  24:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  28:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  2c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  30:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  34:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  38:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  3c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  40:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  44:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  48:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  4c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  50:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_copy_data>:
+  60:	10 e0       	ldi	r17, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	ee ea       	ldi	r30, 0xAE	; 174
+  68:	f1 e0       	ldi	r31, 0x01	; 1
+  6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
+  6c:	05 90       	lpm	r0, Z+
+  6e:	0d 92       	st	X+, r0
+  70:	aa 36       	cpi	r26, 0x6A	; 106
+  72:	b1 07       	cpc	r27, r17
+  74:	d9 f7       	brne	.-10     	; 0x6c <__do_copy_data+0xc>
+  76:	0e 94 53 00 	call	0xa6	; 0xa6 <main>
+  7a:	0c 94 d5 00 	jmp	0x1aa	; 0x1aa <_exit>
+
+0000007e <__bad_interrupt>:
+  7e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000082 <H7SEG_u8Init>:
+ *			     (0) means no error,(1) means Undefined PORT Argument
+ */
+u8 H7SEG_u8Init(u8 Copy_u8Reg)
+{
+	/*initialize 7-segment led string at desired port and return error value*/
+	return HLED_u8InitLedString(Copy_u8Reg);
+  82:	0e 94 4c 00 	call	0x98	; 0x98 <HLED_u8InitLedString>
+
+}/*end of H7SEG_u8Init()*/
+  86:	08 95       	ret
+
+00000088 <H7SEG_u8DisplayNumber>:
+{
+	/*Disblay Number check condition*/
+	if ( (Copy_u8DisblayNumber >= 0) || (Copy_u8DisblayNumber<10) )
+	{
+		/*Disblay number from seven segment array and return error value*/
+		return HLED_u8LedStringOnOff(Copy_u8Reg,H7SEG_u8SevenSegArray[Copy_u8DisblayNumber]);
+  88:	e6 2f       	mov	r30, r22
+  8a:	f0 e0       	ldi	r31, 0x00	; 0
+  8c:	e0 5a       	subi	r30, 0xA0	; 160
+  8e:	ff 4f       	sbci	r31, 0xFF	; 255
+  90:	60 81       	ld	r22, Z
+  92:	0e 94 50 00 	call	0xa0	; 0xa0 <HLED_u8LedStringOnOff>
+		/*Disblay Number out of range error*/
+		return 2;  
+		
+	}/*End of Disblay Number check condition*/
+
+  96:	08 95       	ret
+
+00000098 <HLED_u8InitLedString>:
+u8 HLED_u8LedOnOff(u8 Copy_u8Reg,u8 Copy_u8Bit,u8 Copy_u8State)
+{
+	/*write led value on desired bit and return error value*/
+	return MDIO_u8WriteBit(Copy_u8Reg,Copy_u8Bit,Copy_u8State);
+
+}/*end of HLED_u8LedOnOff*/
+  98:	61 e0       	ldi	r22, 0x01	; 1
+  9a:	0e 94 9d 00 	call	0x13a	; 0x13a <MDIO_u8SetDirectionReg>
+  9e:	08 95       	ret
+
+000000a0 <HLED_u8LedStringOnOff>:
+ *			     (0) means no error,(1) means Undefined PORT Argument
+ */
+u8 HLED_u8LedStringOnOff(u8 Copy_u8Reg,u8 Copy_u8Value)
+{
+	/*write led values on Register and return error value*/
+	return MDIO_u8WriteReg(Copy_u8Reg,Copy_u8Value);
+  a0:	0e 94 b9 00 	call	0x172	; 0x172 <MDIO_u8WriteReg>
+
+  a4:	08 95       	ret
+
+000000a6 <main>:
+	
+	/*==========================================
+	 * Initialization
+	 *==========================================*/
+	/*Initialize first 7Seg at PORTA*/
+	H7SEG_u8Init(MDIO_PORTB);
+  a6:	82 e0       	ldi	r24, 0x02	; 2
+  a8:	0e 94 41 00 	call	0x82	; 0x82 <H7SEG_u8Init>
+	/*Initialize second 7Seg at PORTB*/
+	H7SEG_u8Init(MDIO_PORTC);
+  ac:	83 e0       	ldi	r24, 0x03	; 3
+  ae:	0e 94 41 00 	call	0x82	; 0x82 <H7SEG_u8Init>
+	/*Initialize Led string*/
+	HLED_u8InitLedString(MDIO_PORTA);
+  b2:	81 e0       	ldi	r24, 0x01	; 1
+  b4:	0e 94 4c 00 	call	0x98	; 0x98 <HLED_u8InitLedString>
+	u8 count = 0;
+	/*count_10 stores second 7-segment value*/
+	u8 count_10 = 0;
+	
+	/*initialize 7-segments values with zeros*/
+	H7SEG_u8DisplayNumber(MDIO_PORTB,count);
+  b8:	60 e0       	ldi	r22, 0x00	; 0
+  ba:	82 e0       	ldi	r24, 0x02	; 2
+  bc:	0e 94 44 00 	call	0x88	; 0x88 <H7SEG_u8DisplayNumber>
+	H7SEG_u8DisplayNumber(MDIO_PORTC,count_10);
+  c0:	60 e0       	ldi	r22, 0x00	; 0
+  c2:	83 e0       	ldi	r24, 0x03	; 3
+  c4:	0e 94 44 00 	call	0x88	; 0x88 <H7SEG_u8DisplayNumber>
+	 * Variables
+	 *==========================================*/
+	/*count stores first 7-segment value*/
+	u8 count = 0;
+	/*count_10 stores second 7-segment value*/
+	u8 count_10 = 0;
+  c8:	e1 2c       	mov	r14, r1
+	
+	/*==========================================
+	 * Variables
+	 *==========================================*/
+	/*count stores first 7-segment value*/
+	u8 count = 0;
+  ca:	f1 2c       	mov	r15, r1
+		
+		/*4 loops to cover all 8 LEDs*/
+		for (u8 i=0;i<4;i++)
+		{
+			/*set LED string value*/
+			HLED_u8LedStringOnOff(MDIO_PORTA,( (129>>i) | (129<<i) ) );
+  cc:	01 e8       	ldi	r16, 0x81	; 129
+  ce:	10 e0       	ldi	r17, 0x00	; 0
+	
+	/*==========================================
+	 * Variables
+	 *==========================================*/
+	/*count stores first 7-segment value*/
+	u8 count = 0;
+  d0:	c0 e0       	ldi	r28, 0x00	; 0
+  d2:	d0 e0       	ldi	r29, 0x00	; 0
+		
+		/*4 loops to cover all 8 LEDs*/
+		for (u8 i=0;i<4;i++)
+		{
+			/*set LED string value*/
+			HLED_u8LedStringOnOff(MDIO_PORTA,( (129>>i) | (129<<i) ) );
+  d4:	b8 01       	movw	r22, r16
+  d6:	0c 2e       	mov	r0, r28
+  d8:	02 c0       	rjmp	.+4      	; 0xde <main+0x38>
+  da:	75 95       	asr	r23
+  dc:	67 95       	ror	r22
+  de:	0a 94       	dec	r0
+  e0:	e2 f7       	brpl	.-8      	; 0xda <main+0x34>
+  e2:	c8 01       	movw	r24, r16
+  e4:	0c 2e       	mov	r0, r28
+  e6:	02 c0       	rjmp	.+4      	; 0xec <main+0x46>
+  e8:	88 0f       	add	r24, r24
+  ea:	99 1f       	adc	r25, r25
+  ec:	0a 94       	dec	r0
+  ee:	e2 f7       	brpl	.-8      	; 0xe8 <main+0x42>
+  f0:	68 2b       	or	r22, r24
+  f2:	81 e0       	ldi	r24, 0x01	; 1
+  f4:	0e 94 50 00 	call	0xa0	; 0xa0 <HLED_u8LedStringOnOff>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  f8:	8f e7       	ldi	r24, 0x7F	; 127
+  fa:	9a e1       	ldi	r25, 0x1A	; 26
+  fc:	26 e0       	ldi	r18, 0x06	; 6
+  fe:	81 50       	subi	r24, 0x01	; 1
+ 100:	90 40       	sbci	r25, 0x00	; 0
+ 102:	20 40       	sbci	r18, 0x00	; 0
+ 104:	e1 f7       	brne	.-8      	; 0xfe <main+0x58>
+ 106:	00 c0       	rjmp	.+0      	; 0x108 <main+0x62>
+ 108:	00 00       	nop
+ 10a:	21 96       	adiw	r28, 0x01	; 1
+	/*infinite loop*/
+	while (1) 
+    {
+		
+		/*4 loops to cover all 8 LEDs*/
+		for (u8 i=0;i<4;i++)
+ 10c:	c4 30       	cpi	r28, 0x04	; 4
+ 10e:	d1 05       	cpc	r29, r1
+ 110:	09 f7       	brne	.-62     	; 0xd4 <main+0x2e>
+			
+		}/*end of for*/
+		
+		
+		/*increment first 7-segment value*/
+		count++;
+ 112:	f3 94       	inc	r15
+		
+		/*when first 7-segment value reaches 10*/
+		if (count == 10)
+ 114:	8a e0       	ldi	r24, 0x0A	; 10
+ 116:	f8 12       	cpse	r15, r24
+ 118:	02 c0       	rjmp	.+4      	; 0x11e <main+0x78>
+		{
+			/*make first 7-segment value equal 0*/
+			count = 0;
+			/*increment second 7-segment value*/
+			count_10++;
+ 11a:	e3 94       	inc	r14
+		
+		/*when first 7-segment value reaches 10*/
+		if (count == 10)
+		{
+			/*make first 7-segment value equal 0*/
+			count = 0;
+ 11c:	f1 2c       	mov	r15, r1
+			count_10++;
+			
+		}/*end of if*/
+			
+		/*when second 7-segment reaches 10*/
+		if (count_10 == 10)
+ 11e:	9a e0       	ldi	r25, 0x0A	; 10
+ 120:	e9 12       	cpse	r14, r25
+ 122:	02 c0       	rjmp	.+4      	; 0x128 <main+0x82>
+		{
+			/*make first 7-segment value equal 0*/
+			count = 0;
+			/*make first 7-segment value equal 0*/
+			count_10 = 0;
+ 124:	e1 2c       	mov	r14, r1
+			
+		/*when second 7-segment reaches 10*/
+		if (count_10 == 10)
+		{
+			/*make first 7-segment value equal 0*/
+			count = 0;
+ 126:	f1 2c       	mov	r15, r1
+			/*make first 7-segment value equal 0*/
+			count_10 = 0;
+		}/*end of if*/
+		
+		/*display 7-segments values*/
+		H7SEG_u8DisplayNumber(MDIO_PORTB,count);
+ 128:	6f 2d       	mov	r22, r15
+ 12a:	82 e0       	ldi	r24, 0x02	; 2
+ 12c:	0e 94 44 00 	call	0x88	; 0x88 <H7SEG_u8DisplayNumber>
+		H7SEG_u8DisplayNumber(MDIO_PORTC,count_10);
+ 130:	6e 2d       	mov	r22, r14
+ 132:	83 e0       	ldi	r24, 0x03	; 3
+ 134:	0e 94 44 00 	call	0x88	; 0x88 <H7SEG_u8DisplayNumber>
+		
+	}/*end of infinite loop*/
+ 138:	cb cf       	rjmp	.-106    	; 0xd0 <main+0x2a>
+
+0000013a <MDIO_u8SetDirectionReg>:
+		/*Report Bit number out of range error*/
+		return 2;
+
+	}/*end of bit number check condition*/ 
+
+}/*end of MDIO_u8SetDirectionBit()*/
+ 13a:	61 30       	cpi	r22, 0x01	; 1
+ 13c:	09 f4       	brne	.+2      	; 0x140 <MDIO_u8SetDirectionReg+0x6>
+ 13e:	6f ef       	ldi	r22, 0xFF	; 255
+ 140:	82 30       	cpi	r24, 0x02	; 2
+ 142:	61 f0       	breq	.+24     	; 0x15c <MDIO_u8SetDirectionReg+0x22>
+ 144:	18 f4       	brcc	.+6      	; 0x14c <MDIO_u8SetDirectionReg+0x12>
+ 146:	81 30       	cpi	r24, 0x01	; 1
+ 148:	31 f0       	breq	.+12     	; 0x156 <MDIO_u8SetDirectionReg+0x1c>
+ 14a:	11 c0       	rjmp	.+34     	; 0x16e <MDIO_u8SetDirectionReg+0x34>
+ 14c:	83 30       	cpi	r24, 0x03	; 3
+ 14e:	49 f0       	breq	.+18     	; 0x162 <MDIO_u8SetDirectionReg+0x28>
+ 150:	84 30       	cpi	r24, 0x04	; 4
+ 152:	51 f0       	breq	.+20     	; 0x168 <MDIO_u8SetDirectionReg+0x2e>
+ 154:	0c c0       	rjmp	.+24     	; 0x16e <MDIO_u8SetDirectionReg+0x34>
+ 156:	6a bb       	out	0x1a, r22	; 26
+ 158:	80 e0       	ldi	r24, 0x00	; 0
+ 15a:	08 95       	ret
+ 15c:	67 bb       	out	0x17, r22	; 23
+ 15e:	80 e0       	ldi	r24, 0x00	; 0
+ 160:	08 95       	ret
+ 162:	64 bb       	out	0x14, r22	; 20
+ 164:	80 e0       	ldi	r24, 0x00	; 0
+ 166:	08 95       	ret
+ 168:	61 bb       	out	0x11, r22	; 17
+ 16a:	80 e0       	ldi	r24, 0x00	; 0
+ 16c:	08 95       	ret
+ 16e:	81 e0       	ldi	r24, 0x01	; 1
+ 170:	08 95       	ret
+
+00000172 <MDIO_u8WriteReg>:
+u8 MDIO_u8WriteReg(u8 Copy_u8Reg,u8 Copy_u8Value)
+{
+	u8 Local_u8RegValue = 0;
+	
+	/*value type check condition*/
+	if (Copy_u8Value==MDIO_HIGH)
+ 172:	61 30       	cpi	r22, 0x01	; 1
+ 174:	09 f4       	brne	.+2      	; 0x178 <MDIO_u8WriteReg+0x6>
+	{
+		/*set the whle reg hight*/
+		Local_u8RegValue = 0xff;
+ 176:	6f ef       	ldi	r22, 0xFF	; 255
+		Local_u8RegValue = Copy_u8Value;
+
+	}/*end of value type check condition*/
+
+	/*register switch case*/
+	switch (Copy_u8Reg)
+ 178:	82 30       	cpi	r24, 0x02	; 2
+ 17a:	61 f0       	breq	.+24     	; 0x194 <MDIO_u8WriteReg+0x22>
+ 17c:	18 f4       	brcc	.+6      	; 0x184 <MDIO_u8WriteReg+0x12>
+ 17e:	81 30       	cpi	r24, 0x01	; 1
+ 180:	31 f0       	breq	.+12     	; 0x18e <MDIO_u8WriteReg+0x1c>
+ 182:	11 c0       	rjmp	.+34     	; 0x1a6 <MDIO_u8WriteReg+0x34>
+ 184:	83 30       	cpi	r24, 0x03	; 3
+ 186:	49 f0       	breq	.+18     	; 0x19a <MDIO_u8WriteReg+0x28>
+ 188:	84 30       	cpi	r24, 0x04	; 4
+ 18a:	51 f0       	breq	.+20     	; 0x1a0 <MDIO_u8WriteReg+0x2e>
+ 18c:	0c c0       	rjmp	.+24     	; 0x1a6 <MDIO_u8WriteReg+0x34>
+	{
+		/*Set PORTx register value with inputed Reg value (Local_u8RegValue)*/
+		case MDIO_PORTA : {DIO_PORTA = Local_u8RegValue; return 0;}  break;
+ 18e:	6b bb       	out	0x1b, r22	; 27
+ 190:	80 e0       	ldi	r24, 0x00	; 0
+ 192:	08 95       	ret
+		case MDIO_PORTB : {DIO_PORTB = Local_u8RegValue; return 0;}  break;
+ 194:	68 bb       	out	0x18, r22	; 24
+ 196:	80 e0       	ldi	r24, 0x00	; 0
+ 198:	08 95       	ret
+		case MDIO_PORTC : {DIO_PORTC = Local_u8RegValue; return 0;}  break;
+ 19a:	65 bb       	out	0x15, r22	; 21
+ 19c:	80 e0       	ldi	r24, 0x00	; 0
+ 19e:	08 95       	ret
+		case MDIO_PORTD : {DIO_PORTD = Local_u8RegValue; return 0;}  break;
+ 1a0:	62 bb       	out	0x12, r22	; 18
+ 1a2:	80 e0       	ldi	r24, 0x00	; 0
+ 1a4:	08 95       	ret
+		default         : return 1;   /*error Undefined Port*/
+ 1a6:	81 e0       	ldi	r24, 0x01	; 1
+
+	}/*end of register switch case*/
+
+}/*end of MDIO_u8WriteReg()*/
+ 1a8:	08 95       	ret
+
+000001aa <_exit>:
+ 1aa:	f8 94       	cli
+
+000001ac <__stop_program>:
+ 1ac:	ff cf       	rjmp	.-2      	; 0x1ac <__stop_program>
