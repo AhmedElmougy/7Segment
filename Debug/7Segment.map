@@ -468,16 +468,16 @@ END GROUP
  .debug_frame   0x00000088       0x24 main.o
  .debug_frame   0x000000ac       0xb4 MDIO_Program.o
 
-.debug_str      0x00000000      0x5b3
+.debug_str      0x00000000      0x629
  *(.debug_str)
  .debug_str     0x00000000      0x196 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega32/avr5/crtatmega32.o
  .debug_str     0x00000196      0x204 H7SEG_Program.o
                                 0x22b (size before relaxing)
  .debug_str     0x0000039a       0xa9 HLED_Program.o
                                 0x268 (size before relaxing)
- .debug_str     0x00000443       0x89 main.o
-                                0x26d (size before relaxing)
- .debug_str     0x000004cc       0xe7 MDIO_Program.o
+ .debug_str     0x00000443       0xff main.o
+                                0x264 (size before relaxing)
+ .debug_str     0x00000542       0xe7 MDIO_Program.o
                                 0x2e1 (size before relaxing)
 
 .debug_loc      0x00000000      0xa30
